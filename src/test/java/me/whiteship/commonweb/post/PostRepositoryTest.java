@@ -4,13 +4,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +25,9 @@ public class PostRepositoryTest {
 
     @Test
     public void crud() {
-        Post savedPost = savePost("jpa");
+        Post post = new Post();
+        post.setTitle("jpa");
+        Post savedPost = postRepository.save(post);//persist
 
         savedPost.setTitle("whiteship");
 
@@ -35,7 +37,9 @@ public class PostRepositoryTest {
 
     @Test
     public void findByTitleStartingWith() {
-        savePost("Spring Data Jpa");
+        Post post = new Post();
+        post.setTitle("Spring Data Jpa");
+        Post savedPost = postRepository.save(post);//persist
 
         List<Post> all = postRepository.findByTitleStartingWith("Spring");
         assertThat(all.size()).isEqualTo(1);
@@ -43,15 +47,28 @@ public class PostRepositoryTest {
 
     @Test
     public void findByTitle() {
-        savePost("Spring");
+        savePost();
         List<Post> all = postRepository.findByTitle("Spring", JpaSort.unsafe("LENGTH(title)"));
         assertThat(all.size()).isEqualTo(1);
     }
 
-    private Post savePost(String title) {
+    private Post savePost() {
         Post post = new Post();
-        post.setTitle(title);
+        post.setTitle("Spring");
         return postRepository.save(post);//persist
+    }
+
+    @Test
+    public void updateTitle() {
+        Post spring = savePost();
+
+        String hibernate = "hibernate";
+        int update = postRepository.updateTitle(hibernate, spring.getId());
+        assertThat(update).isEqualTo(1);
+
+        Optional<Post> byId = postRepository.findById(spring.getId());
+        Post post = byId.get();
+        assertThat(post.getTitle()).isEqualTo(hibernate);
     }
 
 }
