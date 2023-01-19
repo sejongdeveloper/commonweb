@@ -27,7 +27,7 @@ public class CommentRepositoryTest {
         comment.setDown(1);
         comments.save(comment);
 
-        comments.findByPost_Id(savedPost.getId()).forEach(c -> {
+        comments.findByPost_Id(savedPost.getId(), CommentSummary.class).forEach(c -> {
             System.out.println(c.getVotes());
         });
     }
