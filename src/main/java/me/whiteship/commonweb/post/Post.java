@@ -7,7 +7,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-@Entity
+@Entity(name = "Posts")
 public class Post {
     @Id
     @GeneratedValue

@@ -10,6 +10,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByTitleStartingWith(String title);
 
-    @Query("select p from Post as p where p.title = :title")
+    @Query("select p from #{#entityName} as p where p.title = :title")
     List<Post> findByTitle(@Param("title") String keyword, Sort sort);
 }
