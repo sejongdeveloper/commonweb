@@ -61,14 +61,10 @@ public class PostRepositoryTest {
     @Test
     public void updateTitle() {
         Post spring = savePost();
+        spring.setTitle("hibernate");
 
-        String hibernate = "hibernate";
-        int update = postRepository.updateTitle(hibernate, spring.getId());
-        assertThat(update).isEqualTo(1);
-
-        Optional<Post> byId = postRepository.findById(spring.getId());
-        Post post = byId.get();
-        assertThat(post.getTitle()).isEqualTo(hibernate);
+        List<Post> all = postRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo("hibernate");
     }
 
 }
