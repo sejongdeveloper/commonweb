@@ -23,9 +23,7 @@ public class PostRepositoryTest {
 
     @Test
     public void crud() {
-        Post post = new Post();
-        post.setTitle("jpa");
-        Post savedPost = postRepository.save(post);//persist
+        Post savedPost = savePost("jpa");
 
         savedPost.setTitle("whiteship");
 
@@ -35,12 +33,23 @@ public class PostRepositoryTest {
 
     @Test
     public void findByTitleStartingWith() {
-        Post post = new Post();
-        post.setTitle("Spring Data Jpa");
-        Post savedPost = postRepository.save(post);//persist
+        savePost("Spring Data Jpa");
 
         List<Post> all = postRepository.findByTitleStartingWith("Spring");
         assertThat(all.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void findByTitle() {
+        savePost("Spring");
+        List<Post> all = postRepository.findByTitle("Spring");
+        assertThat(all.size()).isEqualTo(1);
+    }
+
+    private Post savePost(String title) {
+        Post post = new Post();
+        post.setTitle(title);
+        return postRepository.save(post);//persist
     }
 
 }

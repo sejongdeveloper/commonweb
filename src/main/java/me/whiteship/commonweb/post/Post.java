@@ -3,13 +3,16 @@ package me.whiteship.commonweb.post;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
+@NamedQuery(name = "Post.findByTitle", query = "select p from Post as p where p.title = ?1")
 public class Post {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String title;
