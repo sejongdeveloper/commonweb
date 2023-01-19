@@ -12,9 +12,24 @@ public class CommentRepositoryTest {
     @Autowired
     CommentRepository comments;
 
+    @Autowired
+    PostRepository posts;
+
     @Test
     public void getComment() {
-        comments.findByPost_Id(1L);
+        Post post = new Post();
+        post.setTitle("jpa");
+        Post savedPost = posts.save(post);
+
+        Comment comment = new Comment();
+        comment.setPost(savedPost);
+        comment.setUp(10);
+        comment.setDown(1);
+        comments.save(comment);
+
+        comments.findByPost_Id(savedPost.getId()).forEach(c -> {
+            System.out.println(c.getVotes());
+        });
     }
 
 }
