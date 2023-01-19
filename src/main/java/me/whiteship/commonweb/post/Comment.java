@@ -8,10 +8,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import java.util.Date;
 
 
@@ -22,6 +25,9 @@ public class Comment {
     private Long id;
 
     private String comment;
+
+    @Enumerated(EnumType.STRING)
+    private CommentStatus commentStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
@@ -92,5 +98,10 @@ public class Comment {
 
     public void setBest(boolean best) {
         this.best = best;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        System.out.println("Pre Persist is called");
     }
 }
