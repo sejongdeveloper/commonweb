@@ -14,11 +14,7 @@ public class CommentRepositoryTest {
 
     @Test
     public void getComment() {
-        comments.getById(1L);
-
-        System.out.println("===================");
-
-        comments.findById(1L);
+        comments.findByPost_Id(1L);
     }
 
 }
