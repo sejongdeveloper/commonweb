@@ -34,4 +34,9 @@ public class CommentRepositoryTest {
         });
     }
 
+    @Test
+    public void specs() {
+        comments.findAll(CommentSpecs.isBest().or(CommentSpecs.isGood()));
+    }
+
 }
