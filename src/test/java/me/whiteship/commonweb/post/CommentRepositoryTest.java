@@ -4,7 +4,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static me.whiteship.commonweb.post.CommentSpecs.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -36,7 +39,7 @@ public class CommentRepositoryTest {
 
     @Test
     public void specs() {
-        comments.findAll(CommentSpecs.isBest().or(CommentSpecs.isGood()));
+        comments.findAll(isBest().or(isGood()), PageRequest.of(0, 10));
     }
 
 }
