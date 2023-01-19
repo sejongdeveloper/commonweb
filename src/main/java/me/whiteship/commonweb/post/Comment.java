@@ -5,13 +5,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 
-@NamedEntityGraph(
-        name = "Comment.post",
-        attributeNodes = @NamedAttributeNode("post")
-)
+
 @Entity
 public class Comment {
     @Id @GeneratedValue
