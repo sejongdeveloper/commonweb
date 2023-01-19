@@ -50,7 +50,7 @@ public class CommentRepositoryTest {
         prove.setBest(true);
 
         ExampleMatcher exampleMatcher = ExampleMatcher.matching()
-                .withIncludeNullValues();
+                .withIgnorePaths("up", "down");
 
         Example<Comment> example = Example.of(prove, exampleMatcher);
 
